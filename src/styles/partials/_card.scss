@@ -1,0 +1,28 @@
+@use '../theme';
+
+.card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    border: 2px solid theme.$primary-color;
+    border-radius: 4px;
+    text-decoration: none;
+    color: black;
+}
+
+.card:hover {
+    cursor: pointer;
+}
+
+.card__title {
+    padding: 8px;
+    display: block;
+    background: theme.$primary-color;
+    text-align: center;
+    font-weight: 500;
+    font-size: 34px;
+}
+
+.card__body {
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.5);
+}

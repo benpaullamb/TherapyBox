@@ -1,0 +1,55 @@
+@use '../theme';
+
+.register {
+    height: 100%;
+    padding: 32px;
+}
+
+.register__title {
+    margin-bottom: 64px;
+}
+
+.register__details {
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: center;
+}
+
+.register__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 64px;
+    column-gap: 128px;
+    justify-items: center;
+    align-items: center;
+}
+
+.register__input {
+    width: fit-content;
+}
+
+.register__images {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.register__pic {
+    width: 421px;
+    height: 238px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../images/Add_picture.png');
+}
+
+.register__text {
+    color: white;
+    font-size: 34px;
+}
+
+.register__buttons {
+    display: flex;
+    justify-content: center;
+}

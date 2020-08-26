@@ -1,0 +1,14 @@
+@use '../theme';
+
+.news-card__title {
+    margin-bottom: 24px;
+    display: block;
+    font-size: 24px;
+    text-align: center;
+}
+
+.news-card__snippet {
+    padding: 0 32px;
+    display: block;
+    font-size: 20px;
+}

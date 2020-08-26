@@ -1,0 +1,29 @@
+@use '../theme';
+
+.weather {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+}
+
+.weather__top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.weather__icon {
+    margin-right: 64px;
+}
+
+.weather__temp {
+    font-size: 34px;
+    text-align: center;
+}
+
+.weather__location {
+    display: block;
+    font-size: 34px;
+    text-align: center;
+}

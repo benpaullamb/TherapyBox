@@ -1,0 +1,46 @@
+@use '../theme';
+
+.login {
+    height: 100%;
+    padding: 32px;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
+.login__title {
+    margin-bottom: 128px;
+}
+
+.login__details {
+    margin-bottom: 128px;
+    display: flex;
+    justify-content: center;
+}
+
+.login__input:first-child {
+    margin-right: 128px;
+}
+
+.login__buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.login__footer {
+    display: flex;
+    justify-content: center;
+}
+
+.login__text {
+    color: white;
+    font-size: 34px;
+}
+
+.login__sign-up {
+    color: theme.$primary-color;
+    text-decoration: none;
+}
+
+.login__sign-up:hover {
+    cursor: pointer;
+}

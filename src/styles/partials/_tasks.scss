@@ -1,0 +1,44 @@
+@use '../theme';
+
+.tasks {
+    height: 100%;
+    padding: 32px;
+}
+
+.tasks__title {
+    margin-bottom: 64px;
+    text-align: start !important;
+}
+
+.tasks__container {
+    display: flex;
+    justify-content: center;
+}
+
+.tasks__list {
+    width: 50%;
+}
+
+.tasks__add {
+    width: 64px;
+}
+
+.tasks__add:hover {
+    cursor: pointer;
+}
+
+.task {
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: flex-end;
+}
+
+.task__input {
+    margin-right: 16px;
+}
+
+.task__check {
+    width: 64px;
+    height: 64px;
+}

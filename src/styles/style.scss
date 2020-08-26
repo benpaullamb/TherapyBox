@@ -1,0 +1,63 @@
+@use './theme';
+
+@use './partials/home';
+@use './partials/login';
+@use './partials/news';
+@use './partials/photos';
+@use './partials/register';
+@use './partials/sport';
+@use './partials/tasks';
+
+@use './partials/card';
+@use './partials/weather-card';
+@use './partials/news-card';
+@use './partials/sport-card';
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+html, body, #root, .main {
+    height: 100%;
+    background-image: url('../images/Background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.title {
+    text-align: center;
+    font-size: 60px;
+    font-weight: 400;
+    color: white;
+}
+
+.button {
+    min-width: 300px;
+    padding: 16px;
+    background: theme.$primary-color;
+    border: none;
+    border-radius: 64px;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.input {
+    background: none;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 34px;
+}
+
+.input::placeholder {
+    color: white;
+}

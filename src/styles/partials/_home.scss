@@ -1,0 +1,23 @@
+@use '../theme';
+
+.home {
+    height: 100%;
+    padding: 32px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.home__header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.home__main {
+    padding: 48px 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 64px;
+}

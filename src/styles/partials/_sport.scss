@@ -1,0 +1,44 @@
+@use '../theme';
+
+.sport {
+    height: 100%;
+    padding: 32px;
+}
+
+.sport__title {
+    margin-bottom: 32px;
+    text-align: start !important;
+}
+
+.sport__inputs {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.sport__input {
+    width: 500px;
+    background: none;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 48px;
+    text-align: center;
+}
+
+.sport__input::placeholder {
+    font-size: 48px;
+    color: white;
+}
+
+.sport__teams {
+    padding: 0 64px;
+}
+
+.sport__team {
+    margin-bottom: 4px;
+    display: block;
+    color: white;
+    font-size: 24px;
+}
