@@ -21,3 +21,10 @@
     grid-template-rows: 1fr 1fr;
     gap: 64px;
 }
+
+.clothes {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

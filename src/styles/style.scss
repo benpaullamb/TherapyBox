@@ -58,6 +58,15 @@ html, body, #root, .main {
     font-size: 34px;
 }
 
+.input--small {
+    background: none;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    color: black;
+    font-size: 24px;
+}
+
 .input::placeholder {
     color: white;
 }

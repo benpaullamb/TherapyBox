@@ -1,14 +1,48 @@
 import React, { Component } from 'react';
+import { RadialChart } from 'react-vis';
 
 import DashCard from '../components/DashCard.jsx';
 import WeatherCard from '../components/WeatherCard.jsx';
 import NewsCard from '../components/NewsCard.jsx';
 import SportCard from '../components/SportCard.jsx';
+import TasksCard from '../components/TasksCard.jsx';
 
 export default class Home extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            clothes: [{angle: 1}]
+        };
+
+        this.abortController = new AbortController();
+    }
+
     async componentDidMount() {
-        
+        try {
+            const res = await fetch('/api/clothes', {
+                signal: this.abortController.signal
+            });
+            const clothes = await res.json();
+            
+            const data = clothes.map(item => {
+                return {
+                    label: item.clothe,
+                    angle: item.count
+                };
+            });
+            
+            this.setState({
+                clothes: data
+            });
+        } catch(err) {
+
+        }
+    }
+
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     render() {
@@ -26,16 +60,14 @@ export default class Home extends Component {
 
                     <SportCard/>
 
-                    <DashCard title="Photos" link="/photos">
+                    <DashCard title="Photos" link="/photos"></DashCard>
 
-                    </DashCard>
-
-                    <DashCard title="Tasks" link="/tasks">
-
-                    </DashCard>
+                    <TasksCard/>
                     
                     <DashCard title="Clothes" link="/">
-
+                        <div className="clothes">
+                            <RadialChart data={this.state.clothes} showLabels={true} width={230} height={230}/>
+                        </div>
                     </DashCard>
                 </main>
             </div>

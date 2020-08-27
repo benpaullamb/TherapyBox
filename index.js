@@ -48,7 +48,13 @@ db.once('open', () => {
 const userSchema = new mongoose.Schema({
     username: String,
     passHash: String,
-    email: String
+    email: String,
+    tasks: [
+        {
+            description: String,
+            isComplete: Boolean
+        }
+    ]
 });
 const User = mongoose.model('User', userSchema);
 
@@ -181,6 +187,51 @@ app.get('/api/sport/beaten-teams', (req, res) => {
     });
 
     res.json(beatenTeams);
+});
+
+app.post('/api/save-tasks', async (req, res) => {
+    if(!req.user) return res.json({success: false});
+    const tasks = req.body;
+
+    const user = await User.findOne({ username: req.user.username });
+    if(!user) return res.json({success: false});
+    user.tasks = tasks;
+
+    const saveRes = await user.save();
+    if(!saveRes) return res.json({success: false});
+    res.json({success: true});
+});
+
+app.get('/api/tasks', async (req, res) => {
+    if(!req.user) return res.json({success: false, message: 'No authenticated user'});
+
+    const user = await User.findOne({ username: req.user.username });
+    if(!user) return res.json({success: false, message: 'No user in db'});
+
+    res.json(user.tasks);
+});
+
+// Clothes/warmer
+app.get('/api/clothes', async (req, res) => {
+    const {body} = await got(`https://therapy-box.co.uk/hackathon/clothing-api.php?username=swapnil`, {
+        responseType: 'json'
+    });
+
+    const clothes = body.payload;
+    const uniqueClothes = [];
+    
+    clothes.forEach(clotheRecord => {
+        const existingClothe = uniqueClothes.find(unique => unique.clothe === clotheRecord.clothe);
+        
+        if(existingClothe) return existingClothe.count++;
+
+        uniqueClothes.push({
+            clothe: clotheRecord.clothe,
+            count: 1
+        });
+    });
+
+    res.json(uniqueClothes);
 });
 
 // Pages

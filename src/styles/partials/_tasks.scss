@@ -42,3 +42,15 @@
     width: 64px;
     height: 64px;
 }
+
+.task__check--small {
+    width: 32px;
+    height: 32px;
+}
+
+.tasks-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
