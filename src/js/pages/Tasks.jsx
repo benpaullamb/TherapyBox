@@ -85,7 +85,7 @@ export default class Tasks extends Component {
     }
 
     async save() {
-        const res = await fetch('/api/save-tasks', {
+        const res = await fetch('/api/tasks/save', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
