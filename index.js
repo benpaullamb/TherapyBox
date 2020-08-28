@@ -60,7 +60,7 @@ const User = mongoose.model('User', userSchema);
 
 // Express config
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 app.use(express.static('public'));
 app.use(express.json());
 app.use(session({
@@ -101,22 +101,6 @@ passport.deserializeUser(async (id, done) => {
     done(null, user);
 });
 
-// Weather
-app.get('/api/weather', async (req, res) => {
-    const { lat, lon } = req.query;
-    const { body: openWeather } = await got(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.OPEN_WEATHER_API}&units=metric`, {
-        responseType: 'json'
-    });
-    
-    const weather = {
-        temp: Math.round(openWeather.main.temp),
-        city: openWeather.name,
-        condition: openWeather.weather[0].main
-    };
-
-    res.json(weather);
-});
-
 // Login
 app.post('/login', passport.authenticate('local'), (req, res) => {
     res.json({ success: true });
@@ -148,6 +132,22 @@ app.post('/register', async (req, res) => {
     const savedUser = await user.save();
     if(!savedUser) return res.json({ success: false });
     return res.json({ success: true });
+});
+
+// Weather
+app.get('/api/weather', async (req, res) => {
+    const { lat, lon } = req.query;
+    const { body: openWeather } = await got(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.OPEN_WEATHER_API}&units=metric`, {
+        responseType: 'json'
+    });
+    
+    const weather = {
+        temp: Math.round(openWeather.main.temp),
+        city: openWeather.name,
+        condition: openWeather.weather[0].main
+    };
+
+    res.json(weather);
 });
 
 // News
