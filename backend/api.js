@@ -2,11 +2,23 @@ const express = require('express');
 const fs = require('fs');
 const got = require('got');
 const RSSParser = require('rss-parser');
+const mongoose = require('mongoose');
+const multer = require('multer');
+const { Readable } = require('stream');
+const Grid = require('gridfs-stream');
+const Jimp = require('jimp');
 const User = require('./user-schema');
-const {processSportData} = require('./data-process');
+const {processSportData, getUniqueClotheCounts} = require('./data-process');
 
 const router = express.Router();
 const rssParser = new RSSParser();
+const upload = multer();
+
+const db = mongoose.connection;
+let gridFS;
+db.once('open', () => {
+    gridFS = Grid(db.db, mongoose.mongo);
+});
 
 const sportCSV = fs.readFileSync(__dirname + '\\..\\sport-data.csv', 'utf8');
 let sportData; 
@@ -97,21 +109,72 @@ router.get('/clothes', async (req, res) => {
         responseType: 'json'
     });
 
-    const clothes = body.payload;
-    const uniqueClothes = [];
-    
-    clothes.forEach(clotheRecord => {
-        const existingClothe = uniqueClothes.find(unique => unique.clothe === clotheRecord.clothe);
-        
-        if(existingClothe) return existingClothe.count++;
-
-        uniqueClothes.push({
-            clothe: clotheRecord.clothe,
-            count: 1
-        });
-    });
+    const uniqueClothes = getUniqueClotheCounts(body.payload);
 
     res.json(uniqueClothes);
 });
+
+// Photos
+router.post('/photo/upload', upload.single('photo'), async (req, res) => {
+    const user = await User.findOne({ username: req.user.username });
+
+    const image = await Jimp.read(req.file.buffer);
+    image.resize(280, 280);
+    const buffer = await image.getBufferAsync(Jimp.AUTO);
+
+    const writable = gridFS.createWriteStream({
+        filename: req.file.originalname,
+        mode: 'w',
+        content_type: req.file.mimetype
+    });
+
+    const readable = new Readable();
+    readable._read = () => {};
+    readable.push(buffer);
+    readable.push(null);
+
+    writable.on('close', async file => {
+        user.photoIds.push(file._id);
+        await user.save();
+        res.json({ success: true });
+    });
+
+    readable.pipe(writable);
+});
+
+router.get('/photo', async (req, res) => {
+    const user = await User.findOne({ username: req.user.username });
+
+    if(user.photoIds.length === 0) return res.sendStatus(404);
+
+    const image = await loadImage(user.photoIds[req.query.i]);
+
+    res.send(image);
+});
+
+router.get('/photo/count', async (req, res) => {
+    const user = await User.findOne({ username: req.user.username });
+    res.json({
+        count: user.photoIds.length
+    });
+});
+
+async function loadImage(photoId) {
+    return new Promise((res, rej) => {
+        const readable = gridFS.createReadStream({
+            _id: photoId
+        });
+    
+        const bufferArray = [];
+        readable.on('data', data => bufferArray.push(data));
+        readable.on('end', async () => {
+            const buffer = Buffer.concat(bufferArray);
+            return res(buffer);
+        });
+        readable.on('error', err => {
+            return rej(err);
+        });
+    });
+}
 
 module.exports = router;

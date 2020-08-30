@@ -1,4 +1,7 @@
 # Therapy Box Challenge
+Demo: http://3.11.144.124:8080/  
+Hosted on AWS Lightsail
+
 ## Main Dependencies
 - React
 - React Router
@@ -20,5 +23,6 @@
 - Day 2: 5 hours (express, weather, news, and sport)
 - Day 3: 6 hours (database, login system)
 - Day 4: 3 hours (tasks, clothes/warmer)
+- Day 5: 3 hours (hosting, refactor backend)
 
-Total: 17 hours
+Total: 20 hours

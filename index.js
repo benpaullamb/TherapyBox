@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
-const apiRouter = require('./routes/api');
-const User = require('./routes/user-schema');
+const apiRouter = require('./backend/api');
+const User = require('./backend/user-schema');
 
 const bcryptSaltRounds = 10;
 
@@ -19,9 +19,6 @@ mongoose.connect('mongodb://localhost/therapybox', {
 const db = mongoose.connection;
 db.on('error', () => {
     console.log('Db connection error');
-});
-db.once('open', () => {
-    console.log('Db connected');
 });
 
 // Express config

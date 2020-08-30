@@ -9,6 +9,9 @@ const userSchema = new mongoose.Schema({
             description: String,
             isComplete: Boolean
         }
+    ],
+    photoIds: [
+        String
     ]
 });
 
