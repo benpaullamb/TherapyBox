@@ -16,6 +16,15 @@ Hosted on AWS Lightsail
 - Babel
 - Sass
 
+## Upload Instructions
+1. Go to the Lightsail console
+2. Press `Connect using SSH`
+3. Type `cd projects`, `cd TherapyBox`
+4. Type `forever stopall`
+5. Type `git pull`
+6. Type `npm i`
+7. Type `forever start index.js`
+
 ## Time spent
 - Day 1: 3 hours (design implementations)
 - Day 2: 5 hours (express, weather, news, and sport)

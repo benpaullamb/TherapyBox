@@ -20,7 +20,7 @@ db.once('open', () => {
     gridFS = Grid(db.db, mongoose.mongo);
 });
 
-const sportCSV = fs.readFileSync(__dirname + '\\..\\sport-data.csv', 'utf8');
+const sportCSV = fs.readFileSync(__dirname + '/../sport-data.csv', 'utf8');
 let sportData; 
 (async function() {
     sportData = await processSportData(sportCSV);
