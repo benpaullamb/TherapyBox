@@ -27,3 +27,14 @@
     font-size: 34px;
     text-align: center;
 }
+
+.weather__empty {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.weather__insecure {
+    font-size: 24px;
+}

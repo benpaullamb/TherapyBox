@@ -28,7 +28,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: white;
+    background: rgba(255, 255, 255, 0.5);
     border: 2px solid theme.$primary-color;
     border-radius: 4px;
 }
@@ -37,10 +37,30 @@
     width: 128px;
 }
 
-.photos__form {
+.photos__input {
     display: none;
 }
 
-// .photos__input {
-//     display: none;
-// }
+.photos-card {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    column-gap: 16px;
+    row-gap: 8px;
+}
+
+.photos-card__box {
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid theme.$primary-color;
+    border-radius: 4px;
+}
+
+.photos-card__image {
+    width: 90px;
+    height: 90px;
+}

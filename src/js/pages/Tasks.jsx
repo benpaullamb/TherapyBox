@@ -71,6 +71,9 @@ export default class Tasks extends Component {
         this.setState({
             tasks
         });
+
+        // Add a timer to stop a LOT of calls
+        this.save();
     }
 
     setIsComplete(taskIndex, isComplete) {
@@ -80,7 +83,6 @@ export default class Tasks extends Component {
             tasks
         });
 
-        console.log(this.state.tasks);
         this.save();
     }
 

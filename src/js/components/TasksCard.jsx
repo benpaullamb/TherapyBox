@@ -37,6 +37,10 @@ export default class TasksCard extends Component {
             <DashCard title="Tasks" link="/tasks">
                 <div className="tasks-card">
                     {
+                        this.state.tasks.length === 0 &&
+                        <span className="tasks-card__empty">No tasks</span>
+                    }
+                    {
                         this.state.tasks.map((task, i) => {
                             return (
                                 <Task key={`Task ${i + 1}`}

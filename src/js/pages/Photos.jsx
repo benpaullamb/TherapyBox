@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PlusImage from '../../images/Plus_button.png';
+import { loadPhotos } from '../utils';
 
 export default class Photos extends Component {
 
@@ -10,7 +11,6 @@ export default class Photos extends Component {
             images: []
         };
 
-        this.formRef = React.createRef();
         this.inputRef = React.createRef();
     }
 
@@ -23,12 +23,8 @@ export default class Photos extends Component {
             <div className="photos">
                 <h1 className="title photos__title">Photos</h1>
 
-                <form action="/api/photo/upload" method="post" encType="multipart/form-data" 
-                    ref={this.formRef} onSubmit={e => this.onSubmit(e)} className="photos__form">
-
-                    <input type="file" accept="image/*" name="photo" className="photos__input"
-                        ref={this.inputRef} onChange={() => this.savePhoto()} />
-                </form>
+                <input type="file" accept="image/*" name="photo" className="photos__input"
+                    ref={this.inputRef} onChange={() => this.savePhoto()} />
                 
                 <div className="photos__main">
                     <div className="photos__photo" onClick={() => this.openFilePicker()}>
@@ -41,37 +37,39 @@ export default class Photos extends Component {
                         }
                     </div>
                     <div className="photos__photo">
-                    {
+                        {
                             this.state.images.length > 1 &&
                             <img src={this.state.images[1]} alt=""/>
                         }
                     </div>
-                    <div className="photos__photo"></div>
-                    <div className="photos__photo"></div>
-                    <div className="photos__photo"></div>
+                    <div className="photos__photo">
+                        {
+                            this.state.images.length > 2 &&
+                            <img src={this.state.images[2]} alt=""/>
+                        }
+                    </div>
+                    <div className="photos__photo">
+                        {
+                            this.state.images.length > 3 &&
+                            <img src={this.state.images[3]} alt=""/>
+                        }
+                    </div>
+                    <div className="photos__photo">
+                        {
+                            this.state.images.length > 4 &&
+                            <img src={this.state.images[4]} alt=""/>
+                        }
+                    </div>
                 </div>
             </div>
         );
     }
 
     async loadPhotos() {
-        const countRes = await fetch('/api/photo/count');
-        const {count: photoCount} = await countRes.json();
-        console.log(photoCount);
-
-        const urls = [];
-
-        for(let i = 0; i < photoCount; ++i) {
-            const photoRes = await fetch(`/api/photo?i=${i}`);
-
-            const arrayBuffer = await photoRes.arrayBuffer();
-            const blob = new Blob([arrayBuffer]);
-            const url = window.URL.createObjectURL(blob);
-            urls.push(url);
-        }
+        const urls = await loadPhotos();
         
         this.setState({
-            images: urls
+            images: urls.slice(0, 5)
         });
     }
 
@@ -80,11 +78,14 @@ export default class Photos extends Component {
     }
     
     async savePhoto() {
-        this.formRef.current.submit();
-    }
+        const formData = new FormData();
+        formData.append('photo', this.inputRef.current.files[0]);
 
-    onSubmit(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        await fetch('/api/photo/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        this.loadPhotos();
     }
 }

@@ -13,15 +13,22 @@ export default class WeatherCard extends Component {
         this.state = {
             city: '',
             temp: 0,
-            condition: ''
+            condition: '',
+            isInsecure: false
         };
 
         this.abortController = new AbortController();
     }
 
     async componentDidMount() {
-        const location = await this.getLocation();
-        await this.loadWeather(location);
+        try {
+            const location = await this.getLocation();
+            await this.loadWeather(location);
+        } catch(err) {
+            this.setState({
+                isInsecure: true
+            });
+        }
     }
 
     componentWillUnmount() {
@@ -29,8 +36,9 @@ export default class WeatherCard extends Component {
     }
 
     render() {
-        return (
-            <DashCard title="Weather" link="/">
+        let weather;
+        if(!this.state.isInsecure) {
+            weather = (
                 <div className="weather">
                     <div className="weather__top">
                         <img src={this.getWeatherIcon()} alt="" className="weather__icon"/>
@@ -38,6 +46,18 @@ export default class WeatherCard extends Component {
                     </div>
                     <span className="weather__location">{this.state.city}</span>
                 </div>
+            );
+        } else {
+            weather = (
+                <div className="weather__empty">
+                    <span className="weather__insecure">Cannot access location</span>
+                </div>
+            );
+        }
+
+        return (
+            <DashCard title="Weather" link="/">
+                {weather}
             </DashCard>
         );
     }

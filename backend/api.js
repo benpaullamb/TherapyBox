@@ -136,7 +136,7 @@ router.post('/photo/upload', upload.single('photo'), async (req, res) => {
     writable.on('close', async file => {
         user.photoIds.push(file._id);
         await user.save();
-        res.json({ success: true });
+        res.sendStatus(200);
     });
 
     readable.pipe(writable);
@@ -153,6 +153,8 @@ router.get('/photo', async (req, res) => {
 });
 
 router.get('/photo/count', async (req, res) => {
+    if(!req.user) return res.sendStatus(404);
+    
     const user = await User.findOne({ username: req.user.username });
     res.json({
         count: user.photoIds.length

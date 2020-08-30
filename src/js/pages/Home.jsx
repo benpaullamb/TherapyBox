@@ -6,6 +6,7 @@ import WeatherCard from '../components/WeatherCard.jsx';
 import NewsCard from '../components/NewsCard.jsx';
 import SportCard from '../components/SportCard.jsx';
 import TasksCard from '../components/TasksCard.jsx';
+import PhotosCard from '../components/PhotosCard.jsx';
 
 export default class Home extends Component {
 
@@ -60,7 +61,7 @@ export default class Home extends Component {
 
                     <SportCard/>
 
-                    <DashCard title="Photos" link="/photos"></DashCard>
+                    <PhotosCard/>
 
                     <TasksCard/>
                     
