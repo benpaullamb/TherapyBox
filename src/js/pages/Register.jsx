@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { savePhoto } from '../utils';
 
 export default class Register extends Component {
 
@@ -11,14 +12,18 @@ export default class Register extends Component {
             password: '',
             confirmPass: '',
             email: '',
-            registered: false
+            selectedPhoto: null
         };
+
+        this.photoInputRef = React.createRef();
     }
 
     render() {
+        const photo = this.state.selectedPhoto ? <img src={this.state.selectedPhoto} alt="" className="register__selected"/> : 
+            <span className="register__text">Add picture</span>;
+
         return (
             <div className="register">
-                { this.state.registered && <Redirect to="/login"/> }
                 <h1 className="title register__title">Hackathon</h1>
 
                 <div className="register__details">
@@ -35,8 +40,10 @@ export default class Register extends Component {
                 </div>
 
                 <div className="register__images">
-                    <div className="register__pic">
-                        <span className="register__text">Add picture</span>
+                    <div className="register__pic" onClick={() => this.openFilePicker()}>
+                        <input type="file" accept="image/*" name="photo" className="register__photo"
+                            ref={this.photoInputRef} onChange={() => this.addPhoto()} />
+                            {photo}
                     </div>
                 </div>
 
@@ -53,7 +60,7 @@ export default class Register extends Component {
 
         if(this.state.password !== this.state.confirmPass) return;
 
-        const res = await fetch('/register', {
+        const registerRes = await fetch('/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -64,12 +71,35 @@ export default class Register extends Component {
                 email: this.state.email
             })
         });
-        const json = await res.json();
 
-        if(json.success) {
-            this.setState({
-                registered: true
-            });
-        } 
+        if(registerRes.status !== 200) return;
+
+        await this.login();
+        
+        await savePhoto(this.photoInputRef.current.files[0]);
+
+        if(this.props.onLogIn) this.props.onLogIn();
+    }
+
+    openFilePicker() {
+        this.photoInputRef.current.click();
+    }
+
+    addPhoto() {
+        const url = URL.createObjectURL(this.photoInputRef.current.files[0]);
+        this.setState({ selectedPhoto: url });
+    }
+
+    async login() {
+        await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password
+            })
+        });
     }
 }

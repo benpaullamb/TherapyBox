@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PlusImage from '../../images/Plus_button.png';
-import { loadPhotos } from '../utils';
+import { loadPhotos, savePhoto } from '../utils';
 
 export default class Photos extends Component {
 
@@ -12,10 +12,15 @@ export default class Photos extends Component {
         };
 
         this.inputRef = React.createRef();
+        this.abortController = new AbortController();
     }
 
     componentDidMount() {
         this.loadPhotos();
+    }
+
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     render() {
@@ -66,7 +71,7 @@ export default class Photos extends Component {
     }
 
     async loadPhotos() {
-        const urls = await loadPhotos();
+        const urls = await loadPhotos(this.abortController.signal);
         
         this.setState({
             images: urls.slice(0, 5)
@@ -78,13 +83,15 @@ export default class Photos extends Component {
     }
     
     async savePhoto() {
-        const formData = new FormData();
-        formData.append('photo', this.inputRef.current.files[0]);
+        await savePhoto(this.inputRef.current.files[0]);
 
-        await fetch('/api/photo/upload', {
-            method: 'POST',
-            body: formData
-        });
+        // const formData = new FormData();
+        // formData.append('photo', this.inputRef.current.files[0]);
+
+        // await fetch('/api/photo/upload', {
+        //     method: 'POST',
+        //     body: formData
+        // });
 
         this.loadPhotos();
     }

@@ -44,6 +44,10 @@
     background: url('../images/Add_picture.png');
 }
 
+.register__pic:hover {
+    cursor: pointer;
+}
+
 .register__text {
     color: white;
     font-size: 34px;
@@ -52,4 +56,13 @@
 .register__buttons {
     display: flex;
     justify-content: center;
+}
+
+.register__photo {
+    display: none;
+}
+
+.register__selected {
+    width: 200px;
+    height: 200px;
 }

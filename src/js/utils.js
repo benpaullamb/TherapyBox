@@ -19,3 +19,15 @@ export async function loadPhotos(signal) {
     
     return urls;
 }
+
+export async function savePhoto(file) {
+    const formData = new FormData();
+    formData.append('photo', file);
+
+    const res = await fetch('/api/photo/upload', {
+        method: 'POST',
+        body: formData
+    });
+
+    return res.status === 200;
+}

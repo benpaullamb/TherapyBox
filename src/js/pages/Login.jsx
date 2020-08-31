@@ -55,9 +55,8 @@ export default class Login extends Component {
                     password: this.state.password
                 })
             });
-            const json = await res.json();
     
-            if(json.success && this.props.onLogIn) this.props.onLogIn();
+            if(res.status === 200 && this.props.onLogIn) this.props.onLogIn();
         } catch(err) {
             console.log('Incorrect username/password');
         }

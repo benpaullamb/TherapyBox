@@ -66,7 +66,7 @@ passport.deserializeUser(async (id, done) => {
 
 // Login
 app.post('/login', passport.authenticate('local'), (req, res) => {
-    res.json({ success: true });
+    res.sendStatus(200);
 });
 
 app.get('/logout', (req, res, next) => {
@@ -83,7 +83,7 @@ app.post('/register', async (req, res) => {
     const { username, password, email } = req.body;
     
     const existingUser = await User.findOne({ username });
-    if(existingUser) return res.json({ success: false });
+    if(existingUser) return res.sendStatus(400);
 
     const passHash = await bcrypt.hash(password, bcryptSaltRounds);
     const user = new User({
@@ -93,8 +93,8 @@ app.post('/register', async (req, res) => {
     });
 
     const savedUser = await user.save();
-    if(!savedUser) return res.json({ success: false });
-    return res.json({ success: true });
+    if(!savedUser) return res.sendStatus(400);
+    res.sendStatus(200);
 });
 
 app.use('/api', apiRouter);

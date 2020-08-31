@@ -50,7 +50,8 @@ class App extends Component {
                             <Login onLogIn={() => this.setState({ isLoggedIn: true })}/>
                         </Route>
                         <Route path="/register">
-                            <Register/>
+                            { this.state.isLoggedIn && <Redirect to="/"/> }
+                            <Register onLogIn={() => this.setState({ isLoggedIn: true })}/>
                         </Route>
                         <Route path="/news">
                             { loginRedirect }

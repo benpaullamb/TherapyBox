@@ -1,6 +1,7 @@
 # Therapy Box Challenge
 Demo: http://3.11.144.124:8080/  
-Hosted on AWS Lightsail
+Hosted on AWS Lightsail  
+Designed only for use on desktops (not mobile-first/responsive)
 
 ## Main Dependencies
 - React & React Router
@@ -31,6 +32,7 @@ Hosted on AWS Lightsail
 - Day 3: 6 hours (database, login system)
 - Day 4: 3 hours (tasks, clothes/warmer)
 - Day 5: 3 hours (hosting, refactor backend)
-- Day 6: 4 hours (photo uploading, storage, viewing)
+- Day 6: 5 hours (photo uploading, storage, viewing)
+- Day 7: 1 hours (register photo)
 
-Total: 24 hours
+Total: 26 hours
