@@ -17,7 +17,7 @@ Designed only for use on desktops (not mobile-first/responsive)
 - Babel
 - Sass
 
-## Upload Instructions
+## Lightsail Update Instructions
 1. Go to the Lightsail console
 2. Press `Connect using SSH`
 3. Type `cd projects`, `cd TherapyBox`
