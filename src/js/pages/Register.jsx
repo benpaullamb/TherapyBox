@@ -76,7 +76,9 @@ export default class Register extends Component {
 
         await this.login();
         
-        await savePhoto(this.photoInputRef.current.files[0]);
+        if(this.state.selectedPhoto) {
+            await savePhoto(this.photoInputRef.current.files[0]);
+        }
 
         if(this.props.onLogIn) this.props.onLogIn();
     }
