@@ -1,5 +1,5 @@
 # Therapy Box Challenge
-Demo: http://3.11.144.124:8080/  
+Demo: http://35.178.0.229:8080/  
 Hosted on AWS Lightsail  
 Designed only for use on desktops (not mobile-first/responsive)
 
